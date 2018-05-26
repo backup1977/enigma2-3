@@ -864,7 +864,7 @@ def SatfinderMain(session, close=None, **kwargs):
 		session.openWithCallback(boundFunction(SatfinderCallback, close), Satfinder)
 
 def SatfinderStart(menuid, **kwargs):
-	if menuid == "scan" and nimmanager.somethingConnected():
+	if menuid == "scan":
 		return [(_("Signal finder"), SatfinderMain, "satfinder", 35, True)]
 	else:
 		return []
