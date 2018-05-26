@@ -116,6 +116,18 @@ class AudioSelection(Screen, ConfigListScreen):
 				self.settings.transcodeaac = ConfigSelection(choices = choice_list, default = "off")
 				self.settings.transcodeaac.addNotifier(self.setAACTranscode)
 				conflist.append(getConfigListEntry(_("AAC transcoding"), self.settings.transcodeaac, None))
+				
+			if SystemInfo["CanAC3plusTranscode"]:
+				choice_list = [("use_hdmi_caps", _("Controlled by HDMI")), ("force_ac3", _("Always"))]
+				self.settings.transcodeac3plus = ConfigSelection(choices = choice_list, default = "use_hdmi_caps")
+				self.settings.transcodeac3plus.addNotifier(self.setAC3plusTranscode, initial_call = False)
+				conflist.append(getConfigListEntry(_("AC3+ transcoding"), self.settings.transcodeac3plus, None))
+
+			if SystemInfo["CanDTSHDTranscode"]:
+				choice_list = [("use_hdmi_caps", _("Controlled by HDMI")), ("force_dts", _("Always"))]
+				self.settings.transcodedtshd = ConfigSelection(choices = choice_list, default = "use_hdmi_caps")
+				self.settings.transcodedtshd.addNotifier(self.setDTSHDTranscode, initial_call = False)
+				conflist.append(getConfigListEntry(_("DTS-HD transcoding"), self.settings.transcodedtshd, None))
 
 			if SystemInfo["CanPcmMultichannel"]:
 				self.settings.pcm_multichannel = ConfigOnOff(default=config.av.pcm_multichannel.value)
@@ -341,6 +353,14 @@ class AudioSelection(Screen, ConfigListScreen):
 		else:
 			config.av.downmix_aac.setValue(False)
 		config.av.downmix_aac.save()
+	
+	def setAC3plusTranscode(self, transcode):
+		config.av.transcodeac3plus.setValue(transcode)
+		config.av.transcodeac3plus.save()
+
+	def setDTSHDTranscode(self, transcode):
+		config.av.transcodedtshd.setValue(transcode)
+		config.av.transcodedtshd.save()
 
 	def setAACTranscode(self, transcode):
 		config.av.transcodeaac.setValue(transcode)
