@@ -14,7 +14,7 @@ from enigma import eTimer, getEnigmaVersionString, getDesktop
 from boxbranding import getMachineBrand, getMachineName, getImageVersion, getImageType, getImageBuild, getDriverDate, getImageDevBuild
 from Components.Pixmap import MultiPixmap
 from Components.Network import iNetwork
-from Tools.StbHardware import getFPVersion
+from Tools.StbHardware import 
 from os import path
 from re import search
 import skin
